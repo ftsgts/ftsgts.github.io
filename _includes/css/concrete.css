@@ -1,0 +1,63 @@
+/* ===============================================================
+   THE CONCRETE — the ground of Home, Tags, Archives and About: one
+   contiguous piece, a small seamless grit tile (and a 2x one for sharp
+   screens) over one soft mottling image, fixed to the window. The SVG
+   originals they were made from: _tools/sources/.
+   =============================================================== */
+.is-page,
+.wall-tile.is-closed {     /* a stream with no posts yet: the concrete shows through the grid */
+  --bg: var(--stone);
+  background-color: var(--stone);
+  background-image:
+    -webkit-image-set(url("{{ '/assets/img/concrete-grit.webp' | relative_url }}") 1x, url("{{ '/assets/img/concrete-grit-2x.webp' | relative_url }}") 2x),
+    url("{{ '/assets/img/concrete-mottle.webp' | relative_url }}");
+  background-image:
+    image-set(url("{{ '/assets/img/concrete-grit.webp' | relative_url }}") 1x, url("{{ '/assets/img/concrete-grit-2x.webp' | relative_url }}") 2x),
+    url("{{ '/assets/img/concrete-mottle.webp' | relative_url }}");
+  background-size: 256px 256px, 2800px 1800px;
+  background-repeat: repeat, no-repeat;
+  background-position: 0 0, 0 0;
+  background-attachment: fixed, fixed;
+}
+@media (max-width: 800px) {
+  /* bright phone screens make the concrete read light: a faint darkening,
+     behind everything else */
+  .is-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #00000010;
+    pointer-events: none;
+  }
+}
+
+/* ===============================================================
+   FTSGTS — the collective's name, big, up the left of the column: on
+   Home beside the grid, at its bottom; on Tags, Archives and About in
+   the same place (--ftsgts-y). Hidden on phones.
+   =============================================================== */
+.ftsgts {
+  position: absolute;
+  left: calc(-1 * (var(--gap) + 0.9em));
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font: 800 var(--ftsgts-size)/0.9 var(--display-font);
+  font-variation-settings: "opsz" 96;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.wall-frame > .ftsgts { top: calc(50% + 1.1rem); }
+.is-page:not(.is-home) main > .ftsgts {
+  top: var(--ftsgts-y);
+  left: calc(var(--col-offset) - var(--gap) - 0.9em);
+}
+@media (min-width: 801px) {
+  .wall-frame > .ftsgts { top: calc(100% - var(--ftsgts-half)); }
+}
+@media (max-width: 800px) {
+  .ftsgts { display: none; }
+}

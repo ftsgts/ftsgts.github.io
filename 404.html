@@ -1,0 +1,173 @@
+---
+layout: null
+permalink: /404.html
+---
+{%- comment -%}
+  404: on the concrete, like the list pages. The logo's
+  shark (the sharp drawing, thin dark grey lines) swims up and away toward
+  the distant ringed planet, getting smaller, its tail sweeping side to side
+  as it goes; then the next one sets off. Cheap to run: two CSS transforms
+  on one small drawing. With "reduce motion" set, the shark simply hangs
+  mid-way, still.
+  The drawing is the logo's (_includes/logo.html, without the arc to the
+  planet); its swimming poses are written in by _tools/swim.py.
+  Earlier versions are in _archive/.
+{%- endcomment -%}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lost · {{ site.title }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Source+Sans+3:wght@400;500&display=swap">
+  <style>
+    :root { --ink: #33363b; --head: #2f3236; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      color: var(--ink);
+      font: 400 1rem/1.5 "Source Sans 3", system-ui, sans-serif;
+      /* the list pages' concrete (blog.css, CONCRETE) */
+      background-color: #d9d8d4;
+      background-image:
+        -webkit-image-set(url("{{ '/assets/img/concrete-grit.webp' | relative_url }}") 1x, url("{{ '/assets/img/concrete-grit-2x.webp' | relative_url }}") 2x),
+        url("{{ '/assets/img/concrete-mottle.webp' | relative_url }}");
+      background-image:
+        image-set(url("{{ '/assets/img/concrete-grit.webp' | relative_url }}") 1x, url("{{ '/assets/img/concrete-grit-2x.webp' | relative_url }}") 2x),
+        url("{{ '/assets/img/concrete-mottle.webp' | relative_url }}");
+      background-size: 256px 256px, 2800px 1800px;
+      background-repeat: repeat, no-repeat;
+    }
+
+    svg { overflow: visible; }
+    svg * { vector-effect: non-scaling-stroke; }
+    .star { fill: currentColor; stroke: none; }
+    /* etched into the concrete, like the logo: whitened lines (the filter
+       #etch adds the groove's shadow and lip) */
+    .planet, .shark { color: #f7f5f0; }
+
+    /* the distant planet, top right, small */
+    .planet { position: fixed; top: 8vh; right: 8vw; width: min(14vw, 130px); stroke-width: 2px; }
+
+    /* the shark: starts lower left, swims up and away and arrives AT the
+       planet, shrinking with distance, then fades into it and the next one
+       sets off. One smooth glide on a gentle curve: across (.swim) and up
+       (.rise) move with different easings, so the path bows; the drawing
+       shrinks (.shark) round its head, which lands exactly on the planet —
+       the script below measures the distance (--tx, --ty) for each screen.
+       The etch sits on .rise, outside the shrinking, so the grooves stay
+       crisp and the same depth all the way. */
+    :root { --tx: 62vw; --ty: -46vh; }   /* if the script can't run */
+    .swim {
+      position: fixed;
+      left: 6vw;
+      bottom: 9vh;                 /* beside the words, to their left */
+      width: min(18vw, 190px);
+      animation: across 22s cubic-bezier(.42, 0, .58, 1) infinite;
+    }
+    .rise {
+      filter: url(#etch-px);
+      animation: up 22s cubic-bezier(.25, .1, .55, 1) infinite;
+    }
+    .shark {
+      display: block;
+      width: 100%;
+      stroke-width: 2.1px;
+      transform-origin: 80% 12%;   /* the head */
+      animation: shrink 22s cubic-bezier(.25, .1, .55, 1) infinite, arrive 22s linear infinite;
+    }
+    @keyframes across { from { transform: translateX(0); } to { transform: translateX(var(--tx)); } }
+    @keyframes up     { from { transform: translateY(0); } to { transform: translateY(var(--ty)); } }
+    @keyframes shrink { from { transform: scale(1); } to { transform: scale(0.09); } }
+    @keyframes arrive { 0% { opacity: 0; } 3% { opacity: 1; } 95% { opacity: 1; } 100% { opacity: 0; } }   /* fades only as it reaches the planet */
+    /* swimming: the back half of the body flexes side to side as one
+       curve — the bent poses are made by _tools/swim.py and animated in
+       the svg itself (<animate> on each path), so it's smooth everywhere */
+
+    .words {
+      position: fixed; left: 0; right: 0; bottom: 9vh;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font: 800 clamp(1.5rem, 4vw, 2.2rem)/1.1 "Bricolage Grotesque", sans-serif;
+      font-variation-settings: "opsz" 48;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--head);
+    }
+    /* small text in the index line's face: Source Sans, spaced capitals */
+    p { margin: 0.9rem 0 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.16em; }
+    .path { font-size: 0.72rem; opacity: 0.75; word-break: break-all; }
+    a.home {
+      display: inline-block; margin-top: 1.5rem; padding: 0.45em 1em 0.5em;
+      border-radius: 0.5em;
+      background: #3a3d42; color: #eceae6;
+      font: 400 0.9rem "Source Sans 3", sans-serif; text-transform: uppercase; letter-spacing: 0.16em;
+      text-decoration: none;
+    }
+    a.home:hover, a.home:focus-visible { background: #26282c; color: #ffffff; }
+
+    @media (max-width: 800px) {
+      .swim { left: 6vw; bottom: 42vh; width: min(40vw, 200px); }
+      .planet { width: min(22vw, 110px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .swim, .rise, .shark { animation: none; }
+      .swim { transform: translateX(calc(var(--tx) * 0.45)); }
+      .rise { transform: translateY(calc(var(--ty) * 0.45)); }
+      .shark { transform: scale(0.5); }
+    }
+  </style>
+</head>
+<body>
+  <!-- the etch: dusty white in the groove, a dark sliver along its top inside, a pale lip below
+       (as the dust logo's #etchdust). #etch is in the planet's drawing units (about 3.7 per
+       pixel); #etch-px is in pixels, for the shark: applied around it, after it shrinks, so the
+       groove stays the same crisp depth however far away the shark is. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="etch" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.6 0.1" result="speck"/><feComposite in="SourceGraphic" in2="speck" operator="in" result="dusty"/><feOffset in="SourceAlpha" dy="3.6" result="dn"/><feComposite in="SourceAlpha" in2="dn" operator="out" result="top"/><feFlood flood-color="#46433f"/><feComposite in2="top" operator="in" result="shade"/><feComposite in="dn" in2="SourceAlpha" operator="out" result="low"/><feFlood flood-color="#ffffff" flood-opacity="0.6"/><feComposite in2="low" operator="in" result="lip"/><feMerge><feMergeNode in="lip"/><feMergeNode in="dusty"/><feMergeNode in="shade"/></feMerge></filter><filter id="etch-px" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.6 0.1" result="speck"/><feComposite in="SourceGraphic" in2="speck" operator="in" result="dusty"/><feOffset in="SourceAlpha" dy="1" result="dn"/><feComposite in="SourceAlpha" in2="dn" operator="out" result="top"/><feFlood flood-color="#46433f"/><feComposite in2="top" operator="in" result="shade"/><feComposite in="dn" in2="SourceAlpha" operator="out" result="low"/><feFlood flood-color="#ffffff" flood-opacity="0.6"/><feComposite in2="low" operator="in" result="lip"/><feMerge><feMergeNode in="lip"/><feMergeNode in="dusty"/><feMergeNode in="shade"/></feMerge></filter></svg>
+
+  <svg class="planet" viewBox="1040 140 490 580" aria-hidden="true"><g fill="none" stroke="currentColor" filter="url(#etch)"><circle cx="1302" cy="322" r="120"/><ellipse cx="1302" cy="322" rx="215" ry="52" transform="rotate(-30 1302 322)"/><path class="star" d="M1097 156 Q1099.31 219.69 1137 222 Q1099.31 224.31 1097 288 Q1094.69 224.31 1057 222 Q1094.69 219.69 1097 156 Z"/><path class="star" d="M1392 498 Q1393.75 546.25 1422 548 Q1393.75 549.75 1392 598 Q1390.25 549.75 1362 548 Q1390.25 546.25 1392 498 Z"/><path class="star" d="M1303 636 Q1304.12 666.88 1323 668 Q1304.12 669.12 1303 700 Q1301.88 669.12 1283 668 Q1301.88 666.88 1303 636 Z"/></g></svg>
+
+  <div class="swim" aria-hidden="true"><div class="rise"><svg class="shark" viewBox="400 490 680 960" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10">
+    <!-- swim:start -->
+    <path d="M690 600C800 540 920 505 1030 505L1059 506Q1068 507 1064 515L1045 552L1022 585"/>
+    <path d="M937 622L995 606Q1004 604 1003 613L1000 633"/>
+    <path d="M647 605C580 578 500 570 449 603C500 625 523 655 525 702"/>
+    <path d="M510 744C440 840 410 940 445 1032"><animate attributeName="d" dur="1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" values="M510.0 744.0C439.9 840.1 410.3 945.0 452.7 1042.9;M510.0 744.0C440.1 839.9 409.8 935.0 438.1 1020.6;M510.0 744.0C439.9 840.1 410.3 945.0 452.7 1042.9"/></path>
+    <path d="M793 742C795 820 770 900 693 952C710 900 715 860 701 806"><animate attributeName="d" dur="1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" values="M793.0 742.0C795.0 820.0 769.6 897.9 693.6 949.1C709.6 898.6 714.8 859.6 701.0 806.0;M793.0 742.0C795.0 820.0 770.4 902.1 692.3 954.9C710.4 901.4 715.2 860.4 701.0 806.0;M793.0 742.0C795.0 820.0 769.6 897.9 693.6 949.1C709.6 898.6 714.8 859.6 701.0 806.0"/></path>
+    <path d="M476 1098C520 1170 600 1220 665 1239"><animate attributeName="d" dur="1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" values="M495.3 1110.7C557.6 1179.4 652.0 1215.3 722.0 1221.3;M458.2 1083.3C484.3 1155.0 548.0 1215.3 605.7 1245.7;M495.3 1110.7C557.6 1179.4 652.0 1215.3 722.0 1221.3"/></path>
+    <path d="M638 1153C680 1195 730 1200 765 1165C820 1120 870 1100 925 1104C860 1150 810 1200 790 1240C775 1290 790 1340 800 1385C760 1375 725 1320 710 1280C705 1265 700 1255 697 1250"><animate attributeName="d" dur="1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" values="M669.5 1145.3C723.0 1178.0 773.8 1174.1 798.4 1137.6C841.8 1091.3 887.3 1068.8 942.7 1065.8C888.5 1111.1 852.6 1160.6 845.1 1198.6C846.1 1245.7 875.9 1287.9 897.2 1328.3C855.9 1327.7 806.6 1283.6 779.4 1250.0C769.6 1237.4 761.5 1229.2 756.9 1225.3;M605.7 1156.1C634.8 1204.6 682.5 1218.1 727.9 1187.1C794.8 1145.7 849.3 1129.1 903.0 1139.9C826.3 1184.5 761.3 1231.6 728.1 1270.3C696.2 1318.6 694.7 1371.8 692.5 1418.3C655.9 1399.6 637.5 1337.8 636.0 1295.1C636.2 1279.2 634.7 1268.3 633.4 1262.7;M669.5 1145.3C723.0 1178.0 773.8 1174.1 798.4 1137.6C841.8 1091.3 887.3 1068.8 942.7 1065.8C888.5 1111.1 852.6 1160.6 845.1 1198.6C846.1 1245.7 875.9 1287.9 897.2 1328.3C855.9 1327.7 806.6 1283.6 779.4 1250.0C769.6 1237.4 761.5 1229.2 756.9 1225.3"/></path>
+    <!-- swim:end -->
+  </g></svg></div></div>
+
+  <div class="words">
+    <h1>This page is out of this world.</h1>
+    <p>Nothing at this address — it set off for somewhere more interesting.</p>
+    <p class="path" id="path"></p>
+    <a class="home" href="{{ '/' | relative_url }}">Back to {{ site.title }}</a>
+  </div>
+
+  <script>
+    document.getElementById("path").textContent = location.pathname;
+    // the journey: from the shark's head (80% 12% of its drawing) to the
+    // middle of the planet's disc, measured on this screen
+    function aim() {
+      var w = document.querySelector(".swim"), p = document.querySelector(".planet").getBoundingClientRect();
+      var hx = w.offsetLeft + w.offsetWidth * 0.8, hy = w.offsetTop + w.offsetHeight * 0.12;
+      var px = p.left + p.width * (1302 - 1040) / 490, py = p.top + p.height * (322 - 140) / 580;
+      document.documentElement.style.setProperty("--tx", Math.round(px - hx) + "px");
+      document.documentElement.style.setProperty("--ty", Math.round(py - hy) + "px");
+    }
+    aim(); addEventListener("resize", aim);
+    // reduce motion: the shark keeps still (the svg's own swimming stops too)
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches)
+      document.querySelectorAll(".shark animate").forEach(function (a) { a.remove(); });
+  </script>
+</body>
+</html>

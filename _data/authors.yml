@@ -1,0 +1,4 @@
+# The writers. A post names its writer with `author: KEY` (NAME, ...);
+# the name shows as plain text on the post (never a link).
+mang_dian:
+  name: Máng Diǎn

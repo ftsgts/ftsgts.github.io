@@ -1,0 +1,100 @@
+/* ===============================================================
+   THE HOME GRID ("the wall") — one tile per stream, its latest post,
+   titled in the stream's own style (each stream's tile face is in
+   streams/NAME.css). Above it, the index line; round it, crop marks.
+   Laptops: three across, two rows, the tiles growing with the screen
+   (--tile-h). Small phones: the tiles become slim bands.
+   =============================================================== */
+.wall-frame { position: relative; max-width: var(--col); margin: 0 auto; }
+/* crop marks at two corners */
+.wall-frame::before,
+.wall-frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--iron);
+}
+.wall-frame::before { top: -12px; left: -12px; border-top-width: 1px; border-left-width: 1px; }
+.wall-frame::after { bottom: -12px; right: -12px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* the index line: "FTSGTS / INDEX · N° … · STREAMS · OPEN" */
+.index-line {
+  height: 1.6rem;          /* fixed, with its margin = --index-h */
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 0.6rem;
+  padding: 0.35rem 0 0;
+  border-top: 1px solid var(--iron);
+  font: 400 1.0625rem/1.4 var(--body-font);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--iron);
+}
+
+/* the grid: tiles butt together inside dark grid lines */
+.wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 4px;
+  padding: 4px;
+  background: var(--iron);
+}
+.wall-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: var(--tile-h);
+  padding: 1.4rem 1.5rem;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  /* the titles grow a little with the tiles: they're sized in em */
+  font-size: calc(1rem + (var(--tile-h) - var(--tile-min)) * 0.035);
+}
+.wall-tile:hover { text-decoration: none; outline: 4px solid var(--iron); outline-offset: -4px; }
+.wall-title { font: 500 1.6em/1.15 var(--heading-font); }
+/* a stream with no posts yet: bare concrete (concrete.css), the etched logo
+   (the same on every blank tile: a stream shows its colours when it opens),
+   "This space blank" */
+.wall-tile.is-closed { justify-content: center; align-items: center; gap: 1rem; color: var(--smoke); }
+.wall-tile.is-closed:hover { outline: 0; }
+.wall-tile.is-closed .site-logo {
+  --lw: calc(var(--tile-h) * 0.42);
+  width: var(--lw);
+  height: var(--lw);
+  padding: calc(var(--lw) * 0.135) calc(var(--lw) * 0.135) calc(var(--lw) * 0.115) calc(var(--lw) * 0.115);
+  box-sizing: border-box;
+}
+.wall-closed {
+  font: 400 0.8rem/1.4 var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+/* the tile's number, sign/post, top left */
+.wall-no {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.5rem;
+  font: 400 0.8rem/1 var(--body-font);
+  letter-spacing: 0.16em;
+  opacity: 0.85;          /* faded, but still 4.5:1 on every tile (Pink Noise's is the closest) */
+}
+
+@media (min-width: 801px) {
+  .wall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .index-line { height: auto; flex-wrap: wrap; gap: 0.2rem 1rem; letter-spacing: 0.08em; }
+}
+@media (max-width: 600px) {
+  .wall-tile { min-height: 6.5rem; justify-content: center; padding: 1rem 1.25rem 1rem 4.25rem; }
+  .wall-no { top: 50%; left: 1.25rem; transform: translateY(-50%); }
+  .wall-title { font-size: 1.3em; }
+  /* the slim bands: logo and words side by side */
+  .wall-tile.is-closed { flex-direction: row; justify-content: flex-start; }
+  .wall-tile.is-closed .site-logo { --lw: 4rem; }
+}

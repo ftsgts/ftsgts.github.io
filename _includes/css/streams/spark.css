@@ -1,0 +1,126 @@
+/* ===============================================================
+   STREAM: spark ("FizzBuzz") — tech / DIY / STEM: the engineer's
+   notebook in deep sea teal. IBM Plex Sans headings, Plex Mono code,
+   numbered sections, a blinking cursor after the title, code blocks
+   labelled with their language, quotes as asides.
+   Code colours: code-colours.css.
+   =============================================================== */
+.style-spark, .stream-spark { --signature: #1d5c63; }
+.stream-spark {
+  --preview-font: "IBM Plex Sans", "Source Sans 3", sans-serif;
+  --preview-title: #1a3a3f;
+  --preview-weight: 600;
+}
+.style-spark {
+  --bg: #fbfbf9;
+  --fg: #2a2e2f;
+  --muted: #646b6c;
+  --accent: #2e7d77;          /* sea glass: section numbers, the cursor */
+  --rule: #e3e7e6;
+  --card: #ffffff;
+  --code-bg: #f1f4f3;
+  --ink: #1a3a3f;             /* headings: deep teal ink */
+  --heading-font: "IBM Plex Sans", "Source Sans 3", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --logo-disc: #1d5c63;       /* the logo as a teal badge with white lines */
+  --logo-rim: #1d5c63;
+  --logo-ink: #ffffff;
+}
+
+/* ---- the post ---- */
+.style-spark .post-header h1 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.style-spark .post-header h1::after { content: "▋"; color: var(--accent); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.style-spark .meta-mono { font: 0.82rem var(--mono); letter-spacing: 0.01em; }   /* the byline, like a commit header */
+.style-spark .post-body { position: relative; margin-top: 1.5rem; counter-reset: section; font-family: var(--heading-font); }   /* the reading text in IBM Plex Sans, like the headings */
+.style-spark .post-body a { color: #0056b2; }
+.style-spark .post-body h2,
+.style-spark .post-body h3 { font-family: var(--heading-font); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+/* numbered sections: 01, 02 … */
+.style-spark .post-body h2 { counter-increment: section; }
+.style-spark .post-body h2::before {
+  content: counter(section, decimal-leading-zero);
+  margin-right: 0.7em;
+  font: 500 0.62em var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  vertical-align: 0.2em;
+}
+/* code: Plex Mono on a soft panel */
+.style-spark pre,
+.style-spark code { font-family: var(--mono); }
+.style-spark pre {
+  border: 0;
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  font-size: 0.86em;
+  line-height: 1.6;
+}
+.style-spark :not(pre) > code { font-size: 0.88em; }
+/* each code block's language, as a small tab in its top-right corner */
+.style-spark div.highlighter-rouge { position: relative; }
+.style-spark div.highlighter-rouge::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.25rem 0.7rem;
+  border-radius: 0 10px 0 8px;
+  background: #dceae8;
+  color: var(--ink);
+  font: 600 0.74rem var(--mono);
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+.style-spark div.language-cpp::before { content: "C++"; }
+.style-spark div.language-c::before { content: "C"; }
+.style-spark div.language-python::before { content: "Python"; }
+.style-spark div.language-bash::before { content: "Bash"; }
+.style-spark div.language-shell::before,
+.style-spark div.language-sh::before { content: "Shell"; }
+.style-spark div.language-console::before { content: "Console"; }
+.style-spark div.language-javascript::before,
+.style-spark div.language-js::before { content: "JavaScript"; }
+.style-spark div.language-typescript::before,
+.style-spark div.language-ts::before { content: "TypeScript"; }
+.style-spark div.language-rust::before { content: "Rust"; }
+.style-spark div.language-go::before { content: "Go"; }
+.style-spark div.language-json::before { content: "JSON"; }
+.style-spark div.language-yaml::before { content: "YAML"; }
+.style-spark div.language-toml::before { content: "TOML"; }
+.style-spark div.language-html::before { content: "HTML"; }
+.style-spark div.language-css::before { content: "CSS"; }
+.style-spark div.language-sql::before { content: "SQL"; }
+.style-spark div.language-java::before { content: "Java"; }
+.style-spark div.language-ruby::before { content: "Ruby"; }
+.style-spark div.language-diff::before { content: "Diff"; }
+.style-spark div.language-makefile::before { content: "Makefile"; }
+.style-spark div.language-cmake::before { content: "CMake"; }
+.style-spark div.language-plaintext::before { content: "Text"; }
+/* quotes: ASIDES — the moments to pause and think */
+.style-spark blockquote {
+  margin: 1.75rem 0;
+  padding: 0.85rem 1.25rem 1rem;
+  border-left: 2px solid var(--accent);
+  background: #eff5f4;
+  color: var(--ink);
+  font: 1.05em/1.6 var(--heading-font);
+}
+.style-spark blockquote::before {
+  content: "aside";
+  display: block;
+  margin-bottom: 0.3rem;
+  font: 500 0.68rem var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.style-spark blockquote p { margin: 0; }
+
+/* ---- its home tile (the cursor steady, not blinking) ---- */
+.wall-tile.style-spark .wall-title { color: #1a3a3f; font-weight: 600; }
+.wall-tile.style-spark .wall-title::after { content: "▋"; color: #1d5c63; }

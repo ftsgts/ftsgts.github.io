@@ -1,0 +1,54 @@
+# THE STREAMS — one entry per stream, IN ORDER.
+#
+# The order here is everything:
+#   - a stream's NUMBER is its place in this list (the first is stream 1);
+#   - the home grid shows one tile per stream, in this order (1 top left …),
+#     each with that stream's latest post;
+#   - Archives' "By stream" columns follow the same order.
+#
+#   name  the stream's internal name: posts choose it with `style: NAME`,
+#         and its look lives in _includes/css/streams/NAME.css. Never shown.
+#   sign  the stream's number in its own script, shown on the tiles, the
+#         posts and Archives (screen readers hear "stream N" instead).
+#   lang  the sign's language code (so screen readers pronounce it right).
+#   font  the Google font that draws the sign (loaded for just that character);
+#   weight  its weight, if the font has more than one.
+#   text_font  (optional) a Google font for the stream's reading text, as
+#         Google writes it (e.g. "Jost:ital,wght@0,400;0,500;1,400"); it's
+#         loaded on that stream's posts only, and used in streams/NAME.css.
+#
+# To add a stream: add an entry at the end (it becomes the next number),
+# create its CSS file, and write a post with `style: NAME`.
+- name: "aleph"
+  sign: "١"            # Arabic 1 — in a calligraphic (Naskh) font, so the stroke reads as Arabic
+  lang: ar
+  font: Noto Naskh Arabic
+  weight: 500
+  text_font: "Work Sans:ital,wght@0,300;0,500;1,300"
+- name: "zine"
+  sign: "二"           # Chinese 2
+  lang: zh
+  font: Noto Sans SC
+  weight: 500
+  text_font: "Chivo:ital,wght@0,400;0,700;1,400"
+- name: "ruh" # Urdu word for "soul", "spirit";
+  sign: "𐴳"            # Hanifi Rohingya 3
+  lang: rhg
+  font: Noto Sans Hanifi Rohingya
+  weight: 500
+- name: "pink"
+  sign: "𝋤"            # Maya 4 (four dots)
+  lang: myn
+  font: Noto Sans Mayan Numerals
+  text_font: "Jost:ital,wght@0,400;0,500;0,600;1,400"
+- name: "spark"
+  sign: "𞥕"            # Adlam 5
+  lang: ff-Adlm
+  font: Noto Sans Adlam
+  weight: 500
+- name: "kisso" # Gujarati for "anecdote or short tale";
+  sign: "૬"            # Gujarati 6
+  lang: gu
+  font: Noto Sans Gujarati
+  weight: 500
+  text_font: "Manrope:wght@400;600"

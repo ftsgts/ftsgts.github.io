@@ -1,0 +1,71 @@
+/* ===============================================================
+   TOKENS — every value used in more than one place. Change a value
+   here and it changes everywhere. (Each stream's own colours live in
+   streams/NAME.css.)
+   =============================================================== */
+:root {
+  /* ---- type ---- */
+  --body-font: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, sans-serif;
+  --heading-font: var(--body-font);      /* streams may change it */
+  --display-font: "Bricolage Grotesque", sans-serif;   /* FTSGTS, page titles, the menu */
+  --code-font: ui-monospace, "SF Mono", Menlo, monospace;
+  --measure: 58rem;                      /* a post's text column */
+
+  /* ---- a post's colours (each stream sets its own in streams/NAME.css) ---- */
+  --bg: #ffffff;
+  --fg: #1d1d1d;
+  --muted: #6b6b6b;
+  --accent: #0056b2;
+  --rule: #e6e6e6;
+  --card: #ffffff;
+  --code-bg: #f0f0f0;
+  --signature: #3a3a3a;                  /* a stream's one colour: its dot, its post's top line */
+
+  /* ---- the concrete pages (Home, Tags, Archives, About) ---- */
+  --stone: #d9d8d4;       /* the concrete */
+  --graphite: #33363b;    /* masthead and footer text, stream labels */
+  --charcoal: #2f3236;    /* FTSGTS, headings, the menu, links */
+  --iron: #3a3d42;        /* grid lines, the index line, tag boxes, crop marks */
+  --bone: #eceae6;        /* text on the dark tag boxes */
+  --slate: #2b3a40;       /* list titles and day numbers */
+  --smoke: #4e4e4e;       /* small grey text */
+  --pebble: #a5a49f;      /* timeline lines */
+  --flint: #7c7b77;       /* timeline year rings */
+  --seam: #b3b2ac;        /* the hairline above section headings */
+
+  /* ---- the etched logo ---- */
+  --disc: #cbc9c4;        /* the sunk concrete disc */
+  --dust: #f7f5f0;        /* the dusty lines */
+  --rim-dark: #858380;    /* the disc's rim, in shadow at the top … */
+  --rim-light: #f1f0ec;   /* … catching the light at the bottom */
+
+  /* ---- the frame (laptops; phones see css/phones parts of each file) ---- */
+  --mast-top: 1.75rem;    /* space above the logo and the grid */
+  --gap: 1.5rem;          /* FTSGTS (and the logo's right edge) to the grid */
+  --edge-g: 1.5rem;       /* the outer gap, the same left and right */
+  --logo-size: 150px;
+  --menu-w: 120px;        /* the widest menu word, "ARCHIVES" */
+  --menu-gap: 1.25rem;    /* the menu to the grid */
+  --side: calc(var(--edge-g) + var(--logo-size) + var(--gap));        /* the left margin */
+  --edge-r: calc(var(--edge-g) + var(--menu-w) + var(--menu-gap));     /* the right margin */
+  --col: 100rem;          /* the column (grid, lists) — at most this wide */
+  --index-h: 2.2rem;      /* the index line above the grid, with its margin */
+  --grid-lines: 12px;     /* the grid's lines: 4px round it, 4px between rows */
+  --tile-min: 15rem;
+  --tile-max: 24rem;
+  --tile-h: var(--tile-min);              /* phones; laptops: see below */
+  --ftsgts-size: 6rem;
+  --ftsgts-half: 9.48rem; /* half of FTSGTS's length (3.16em at 6rem, measured) */
+  /* FTSGTS's middle on Tags/Archives/About, down from the top of the content */
+  --ftsgts-y: calc(var(--index-h) + var(--tile-h) + var(--grid-lines) / 2);
+}
+@media (min-width: 801px) {
+  :root {
+    /* the tiles grow with the screen's height until the grid fills it — but
+       never taller than they are wide (a third of the column) */
+    --tile-w: calc((100vw - var(--side) - var(--edge-r) - var(--grid-lines)) / 3);
+    --tile-h: clamp(var(--tile-min), min(calc((100vh - var(--mast-top) - var(--index-h) - var(--grid-lines) - 2.5rem) / 2), var(--tile-w)), var(--tile-max));
+    /* FTSGTS sits at the bottom of the grid: its middle is half its length up */
+    --ftsgts-y: calc(var(--index-h) + 2 * var(--tile-h) + var(--grid-lines) - var(--ftsgts-half));
+  }
+}

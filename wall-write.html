@@ -1,0 +1,50 @@
+---
+layout: page
+title: Write on the wall
+permalink: /wall/write/
+---
+{%- comment -%}
+  /wall/write/: the form for the wall (/wall/, wall.html). After posting,
+  the writer is taken back to the wall. Script: assets/js/comment-wall.js.
+{%- endcomment -%}
+{%- assign wall_on = false %}{% if site.wall_api and site.wall_api != "" %}{% assign wall_on = true %}{% endif %}
+<h1 class="page-title">Write</h1>
+<p class="cw-tongues">
+    <span lang="gu" dir="auto">લખો</span>
+    <span lang="ar" dir="auto">اكتب</span>
+    <span lang="zh" dir="auto">写</span>
+    <span lang="sw" dir="auto">Andika</span>
+    <span lang="he" dir="auto">כתוב</span>
+    <span lang="ta" dir="auto">எழுது</span>
+    <span lang="es" dir="auto">Escribe</span>
+    <span lang="ru" dir="auto">Пиши</span>
+    <span lang="yo" dir="auto">Kọ</span>
+    <span lang="pt" dir="auto">Escreva</span>
+    <span lang="bn" dir="auto">লেখো</span>
+    <span lang="id" dir="auto">Tulis</span>
+    <span lang="am" dir="auto">ጻፍ</span>
+    <span lang="mi" dir="auto">Tuhia</span>
+    <span lang="qu" dir="auto">Qillqay</span>
+</p>
+
+<div class="comment-wall" id="comment-wall" data-api="{{ site.wall_api }}" data-wall="{{ '/wall/' | relative_url }}">
+  <p class="cw-intro">Your message stays on the wall for 3 days.</p>
+  {%- if wall_on %}
+  <form class="cw-form">
+    <label class="vh" for="cw-text">Write on the wall</label>
+    <textarea id="cw-text" name="text" rows="5" maxlength="500" required placeholder="Write on the wall…" aria-describedby="cw-note"></textarea>
+    <label class="cw-sign">From <span class="cw-optional">(optional)</span> <input name="name" maxlength="40" autocomplete="off"></label>
+    <div class="cw-row">
+      <p class="cw-note" id="cw-note">No links. No email addresses. No phone numbers. 500 characters maximum.</p>
+      <button type="submit">Post</button>
+    </div>
+    <div class="cw-trap" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label></div>
+  </form>
+  <p class="cw-status" role="status"></p>
+  <p class="cw-back"><a href="{{ '/wall/' | relative_url }}">← Back to the wall</a></p>
+  <noscript><p class="cw-status">Writing on the wall needs JavaScript.</p></noscript>
+  <script src="{{ '/assets/js/comment-wall.js' | relative_url }}"></script>
+  {%- else %}
+  <p class="cw-status">The wall isn’t open yet.</p>
+  {%- endif %}
+</div>

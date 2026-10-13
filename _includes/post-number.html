@@ -1,0 +1,12 @@
+{%- comment -%}
+  A post's number: its stream's SIGN / the post's number in that stream
+  (plain digits, oldest first). E.g. ١/03 = stream 1's third post.
+  Screen readers hear "stream 1, post 3".
+  Use: {% include post-number.html post=post %}
+{%- endcomment -%}
+{%- assign pn_style = include.post.style -%}
+{%- assign pn_url = include.post.url -%}
+{%- assign pn_mine = site.posts | where: "style", pn_style | reverse -%}
+{%- assign pn = 0 -%}
+{%- for p in pn_mine %}{% if p.url == pn_url %}{% assign pn = forloop.index %}{% endif %}{% endfor -%}
+{%- include stream-sign.html name=pn_style -%}<span aria-hidden="true">/{{ pn | prepend: "0" | slice: -2, 2 }}</span><span class="vh">, post {{ pn }}</span>

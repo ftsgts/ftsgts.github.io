@@ -1,0 +1,15 @@
+/* ===============================================================
+   THE STREAMS' SIGNS — each stream's number in its own script
+   (_data/streams.yml), on the home tiles, the posts' number line and
+   above the Archives dots. The fonts come from the list in
+   _data/streams.yml, in the same order.
+   =============================================================== */
+.stream-sign {
+  font-family: {% for s in site.data.streams %}"{{ s.font }}", {% endfor %}sans-serif;
+  font-weight: 500;
+  font-size: 1.3em;
+  letter-spacing: 0;
+  line-height: 1;
+  vertical-align: -0.08em;
+  unicode-bidi: isolate;   /* some scripts run right to left: keep the sign from flipping the "/01" after it */
+}

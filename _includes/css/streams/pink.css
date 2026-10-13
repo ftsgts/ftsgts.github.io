@@ -1,0 +1,81 @@
+/* ===============================================================
+   STREAM: pink ("Pink Noise") — a deep pink page, the words
+   straight on it in an almost-white pink, bold geometric headings.
+   =============================================================== */
+.style-pink, .stream-pink { --signature: #d6457f; }
+.stream-pink {
+  --preview-font: Futura, "Century Gothic", "Avenir Next", sans-serif;
+  --preview-title: #a3135f;
+  --preview-weight: 500;
+}
+.style-pink {
+  --bg: #a3135f;
+  --fg: #fff0f7;
+  --muted: #f5bcd8;
+  --accent: #ffc2e0;
+  --rule: #c23a80;
+  --card: #8e0f52;
+  --heading-font: Futura, "Century Gothic", "Avenir Next", sans-serif;
+  --code-bg: #f3d9e6;
+  --logo-disc: #a3135f;    /* the logo as a pink badge, finer pale lines, a darker pink rim */
+  --logo-rim: #8c1052;
+  --logo-ink: #fff0f7;
+  --logo-line: 0.75px;
+}
+
+/* ---- the post ---- */
+.style-pink .post-header h1 { font-size: 2.8rem; font-weight: 500; letter-spacing: 0; }
+.style-pink .post-body {
+  --fg: #fff3f8;
+  --muted: #f5bcd8;
+  --accent: #ffffff;
+  --rule: #c23a80;
+  --code-bg: #8e0f52;
+  color: var(--fg);
+  margin-top: 2rem;
+  font-family: "Jost", var(--body-font);   /* geometric, like its Futura headings */
+  font-size: 1.05em;
+  line-height: 1.75;
+}
+.style-pink .post-body a {
+  color: #ffffff;
+  text-decoration: underline;   /* soft pink and white are close: links are underlined */
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.style-pink .post-body h2,
+.style-pink .post-body h3 { font-weight: 500; color: #ffffff; }
+.style-pink .post-body strong,
+.style-pink .post-body code { color: #ffffff; }
+/* quotes: LUSH and cheeky — a candy-pink pillow hugging the words, a
+   curvy corner, the words big in the heading face, and a fat round quote
+   mark tipping into the corner */
+.style-pink blockquote {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2.75rem 0 2.25rem;
+  padding: 1.5rem 2.25rem 1.6rem 3rem;
+  border: 0;
+  border-radius: 2.5rem 2.5rem 2.5rem 0.4rem;
+  background: #ffc2e0;
+  color: #6e0940;
+  font: 500 1.3em/1.45 var(--heading-font);
+}
+.style-pink blockquote::before {
+  content: "\201C";
+  position: absolute;
+  top: -0.3em;
+  left: -0.12em;
+  font: 700 4.6em/1 Georgia, "Times New Roman", serif;
+  color: #ff4f9a;
+  pointer-events: none;
+}
+.style-pink blockquote p { margin: 0; }
+
+/* ---- its home tile ---- */
+.wall-tile.style-pink .wall-title { color: #ffffff; font-size: 2em; }
+
+@media (max-width: 600px) {
+  .wall-tile.style-pink .wall-title { font-size: 1.45em; }
+}

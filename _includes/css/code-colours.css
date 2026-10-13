@@ -1,0 +1,14 @@
+/* ===============================================================
+   CODE COLOURS — soft syntax colours for the spark and ruh
+   streams (Jekyll's highlighter classes), and their inline code.
+   =============================================================== */
+:is(.style-spark, .style-ruh) .highlight :is(.c, .c1, .cm) { color: #8a90a0; font-style: italic; }   /* comments */
+:is(.style-spark, .style-ruh) .highlight :is(.cp, .cpf) { color: #8a6fb5; }                        /* #include */
+:is(.style-spark, .style-ruh) .highlight :is(.k, .kd, .kr, .kc) { color: #c43c75; }                /* keywords */
+:is(.style-spark, .style-ruh) .highlight .kt { color: #5b5fc7; }                                  /* types */
+:is(.style-spark, .style-ruh) .highlight :is(.s, .s1, .s2, .sc, .se) { color: #2f8a64; }           /* strings */
+:is(.style-spark, .style-ruh) .highlight :is(.m, .mi, .mf) { color: #b5651d; }                    /* numbers */
+:is(.style-spark, .style-ruh) .highlight :is(.nf, .nc) { color: #2c5fa8; }                        /* functions, classes */
+:is(.style-spark, .style-ruh) .highlight :is(.o, .p) { color: #6a7080; }                          /* operators, punctuation */
+:is(.style-spark, .style-ruh) code { color: #3a3f4b; }
+:is(.style-spark, .style-ruh) :not(pre) > code { padding: 0.05em 0.3em; border-radius: 4px; background: var(--code-bg); }

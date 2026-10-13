@@ -1,0 +1,183 @@
+/* ===============================================================
+   THE WALL (/wall/ and /wall/write/ — not the home grid, that's
+   css/wall.css): a free-form log book. The wall: a Write link, then
+   everything written, across the full column, newest first: every piece the same
+   size, each in one of six typefaces (data-face) and four inks
+   (data-ink), picked by assets/js/comment-wall.js. Every ink is
+   AA-readable on the concrete.
+   =============================================================== */
+.comment-wall { max-width: 38rem; margin: 0 auto 1.5rem; color: var(--graphite); }
+.cw-intro {
+  margin: -1rem 0 1.75rem;
+  text-align: center;
+  font: 400 1rem/1.6 var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* ---- "Write" in other languages, under the Write page's title ---- */
+.cw-tongues {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1.1rem;
+  max-width: 34rem;
+  margin: -1.25rem auto 1.75rem;
+  color: var(--smoke);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+.cw-tongues span { unicode-bidi: isolate; }
+
+/* ---- the way to the form, and back ---- */
+.cw-write-link { margin: 0; text-align: center; }
+.cw-write-link a {
+  display: inline-block;
+  padding: 0.35em 1.4em 0.4em;
+  border-radius: 0.5em;
+  background: var(--iron);
+  color: var(--bone);
+  font: 800 1.45rem/1.1 var(--display-font);
+  font-variation-settings: "opsz" 48;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+.cw-write-link a:hover { background: #26282c; color: #ffffff; }
+.cw-back { margin: 1rem 0 0; text-align: center; }
+.cw-back a {
+  color: var(--charcoal);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+}
+.cw-back a:hover { text-decoration: underline; }
+
+/* ---- the form ---- */
+.cw-form textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 6.5rem;
+  padding: 0.8rem 1rem;
+  border: 1.5px dashed var(--smoke);
+  border-radius: 0.4rem;
+  background: #ffffff59;
+  color: var(--charcoal);
+  font: 400 1.2rem/1.5 var(--body-font);
+  resize: vertical;
+}
+.cw-form textarea::placeholder { color: var(--smoke); }
+.cw-optional { text-transform: none; letter-spacing: 0; color: var(--smoke); }
+.cw-form :focus-visible { outline: 3px solid var(--charcoal); outline-offset: 2px; }
+.cw-sign {                        /* "From", as wide as the writing box */
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+.cw-sign input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.2rem 0;
+  border: 0;
+  border-bottom: 1.5px solid var(--smoke);
+  background: transparent;
+  color: var(--charcoal);
+  font: 400 1.05rem var(--body-font);
+  letter-spacing: 0;
+}
+.cw-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.cw-form button {
+  flex: none;
+  padding: 0.45em 1.3em 0.5em;
+  border: 0;
+  border-radius: 0.5em;
+  background: var(--iron);
+  color: var(--bone);
+  font: 400 0.95rem/1.2 var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+}
+.cw-form button:hover { background: #26282c; color: #ffffff; }
+.cw-form button:disabled { opacity: 0.6; cursor: default; }
+.cw-note { margin: 0; font-size: 0.85rem; color: var(--smoke); }
+/* the trap for bots: off-screen, never seen or reached by people */
+.cw-trap { position: absolute; left: -100vw; width: 1px; height: 1px; overflow: hidden; }
+
+.cw-status {                     /* messages: the same voice as the intro */
+  min-height: 1.6em;
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font: 400 0.9rem/1.6 var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* ---- the wall itself ---- */
+.cw-wall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.25rem 3rem;
+  margin: 1rem 0 3rem;
+  padding: 0;
+  list-style: none;
+}
+.cw-piece {
+  --ink: var(--charcoal);
+  --face: var(--body-font);
+  --fit: 1;                       /* evens out the faces' different sizes */
+  max-width: min(26rem, 100%);
+  color: var(--ink);
+}
+.cw-piece[data-ink="1"] { --ink: var(--slate); }
+.cw-piece[data-ink="2"] { --ink: #5c2e2e; }   /* rust */
+.cw-piece[data-ink="3"] { --ink: #24504a; }   /* verdigris */
+.cw-piece[data-face="1"] { --face: "Work Sans", var(--body-font); --fit: 0.94; }
+.cw-piece[data-face="2"] { --face: "Chivo", var(--body-font); --fit: 0.95; }
+.cw-piece[data-face="3"] { --face: "Jost", var(--body-font); --fit: 1.02; }
+.cw-piece[data-face="4"] { --face: "Manrope", var(--body-font); --fit: 0.94; }
+.cw-piece[data-face="5"] { --face: "IBM Plex Mono", var(--code-font); --fit: 0.9; }
+.cw-text {
+  margin: 0;
+  font: 400 calc(1.2rem * var(--fit))/1.55 var(--face);
+  white-space: pre-line;          /* keep the writer's line breaks */
+  overflow-wrap: anywhere;
+}
+.cw-foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+.cw-name {                        /* as the writer typed it */
+  color: var(--ink);
+  font: 400 0.95rem var(--face);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.cw-when { color: var(--smoke); }
+
+@media (max-width: 800px) {
+  .cw-intro { font-size: 0.85rem; }
+  .cw-row { flex-wrap: wrap; }
+  .cw-wall { gap: 1.75rem 1.5rem; }
+}

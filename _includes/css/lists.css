@@ -1,0 +1,270 @@
+/* ===============================================================
+   TAGS, ARCHIVES, ABOUT — the list pages' parts: headings, the tag
+   boxes, the timeline, the stream columns, About.
+   Small text on these pages (dates, links, counts) is set in spaced
+   capitals, like the index line; titles keep their streams' faces.
+   =============================================================== */
+.is-page :is(.archive-jump, .archive-jump a, .back, .sc-date, .tl-date, .tl-day, .tl-month, .tag-cloud a) {
+  font-family: var(--body-font);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* ---- headings: one style, bold Bricolage capitals ---- */
+.page-title,
+.tag-title,
+.archive-heading {
+  font: 800 1.45rem/1.1 var(--display-font);
+  font-variation-settings: "opsz" 48;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--charcoal);
+}
+.page-title,
+.tag-title { margin: 0.5rem 0 2rem; text-align: center; }
+.archive-heading {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--seam);
+  text-align: center;
+  scroll-margin-top: 1rem;
+}
+.archive-jump { text-align: center; margin: -1.25rem 0 1rem; }
+.archive-jump a { color: var(--charcoal); }
+.is-page .back { display: inline-block; margin: 0 0 1.5rem; font-size: 0.9rem; color: var(--charcoal); text-decoration: none; }
+html:not(.js) .is-page .back { display: none; }   /* "← All tags / streams" only make sense with the filters */
+@media (max-width: 800px) {
+  .archive-heading { text-align: left; }
+}
+
+/* ---- Tags: dark boxes sized by how many posts carry the tag (--w: 0..1) ---- */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.1rem 1.25rem;
+  max-width: 36rem;               /* narrow enough to wrap into a cloud */
+  margin: 0 auto;
+  padding: 0.5rem 0 4rem;
+  list-style: none;
+}
+.tag-cloud a {
+  display: inline-block;
+  padding: 0.3em 0.8em 0.35em;
+  border-radius: 0.5em;
+  background: var(--iron);
+  color: var(--bone);
+  font-size: calc(1.3rem + var(--w) * 1.6rem);
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+.tag-cloud a:hover { background: #26282c; color: #ffffff; text-decoration: none; }
+.tag-cloud .n { margin-left: 0.45em; font-size: 0.7em; color: inherit; }
+@media (max-width: 800px) {
+  .tag-cloud { max-width: 48rem; gap: 0.9rem 1rem; }
+  .tag-cloud a { font-size: calc(1.05rem + var(--w) * 1.25rem); }
+}
+/* laptops: the cloud sits in the middle of the page, between the title and
+   the footer (not when one tag is showing, nor without JavaScript, when
+   every tag's list follows the cloud) */
+@media (min-width: 801px) {
+  .js:not(.tag-filtered) .is-page main:has(> .tags-index) { display: flex; flex-direction: column; }
+  .js:not(.tag-filtered) main > .tags-index { flex: 1; display: flex; flex-direction: column; }
+  .js:not(.tag-filtered) .tags-index .tag-cloud { margin-block: auto; padding-bottom: 2.5rem; }
+}
+/* one tag at a time (/tags/?tag=NAME, assets/js/tags.js) */
+.tag-section { margin-top: 2.5rem; scroll-margin-top: 1rem; }
+.js .tag-section { display: none; }
+.js .tag-section.is-active { display: block; margin-top: 0; }
+.tag-filtered .tags-index { display: none; }
+.tag-title .count { margin-left: 0.5rem; color: var(--muted); font-size: 0.55em; font-weight: 400; }
+.tag-section .back { margin-top: 1.5rem; }
+
+/* ---- the timeline: one line, a dot per post in its stream's colour,
+   the date left, the title (in its stream's face) right ---- */
+.timeline {
+  --tl-x: 4.75rem;              /* where the line runs */
+  position: relative;
+  margin: 0;
+  padding: 0.25rem 0 1.25rem;
+  scroll-margin-top: 1rem;
+}
+.tag-section .timeline,
+.stream-section .timeline { --tl-x: 6.5rem; }   /* room for "04 Oct 2026" */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--tl-x) - 1px);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--pebble);
+}
+.archive-heading + .timeline::before { top: 1.7rem; }   /* the line starts at the first year */
+.tag-section .timeline::before { top: 0.9rem; }
+/* a year: a ring on the line */
+.timeline h3 {
+  position: relative;
+  margin: 0.8rem 0 0.4rem;
+  padding-left: calc(var(--tl-x) + 1.25rem);
+  font: 600 1.05rem var(--body-font);
+  color: var(--slate);
+}
+.timeline h3::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--tl-x) - 6px);
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -6px;
+  border: 2px solid var(--flint);
+  border-radius: 50%;
+  background: var(--bg);
+}
+.timeline-list { margin: 0; }
+.timeline-list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--tl-x) minmax(0, 1fr);
+  align-items: baseline;
+  padding: 0.45rem 0;
+  border-radius: 0.3rem;
+  transition: background-color 0.2s;
+}
+.timeline-list li:hover { background-color: #ffffff59; }
+/* the dot: its stream's colour, a thin darker ring so light and dark dots look the same size */
+.timeline-list li::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--tl-x) - 6px);
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--signature);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--signature) 65%, #000);
+  transition: transform 0.2s;
+}
+.timeline-list li:hover::before { transform: scale(1.3); }
+.tl-date { white-space: nowrap; }
+.tl-day { color: var(--slate); font-size: 1rem; }
+.tl-month { color: var(--muted); font-size: 0.82rem; margin-left: 0.15rem; }
+.timeline-list a {
+  padding: 0 0.75rem 0 1.25rem;
+  font-family: var(--preview-font, var(--body-font));
+  font-weight: var(--preview-weight, 500);
+  text-transform: var(--preview-case, none);
+  letter-spacing: var(--preview-spacing, normal);
+  font-size: 1.12rem;
+  color: var(--preview-title, var(--slate));
+  text-decoration: none;
+}
+.timeline-list a::after { content: ""; position: absolute; inset: 0; }   /* the whole line is the link */
+.timeline-list li:is(.stream-kisso, .stream-aleph) a { font-size: 0.98rem; }   /* spaced capitals: a touch smaller */
+
+/* ---- Archives "By stream": a column per stream — its sign, its dot,
+   its posts down a short line ---- */
+.stream-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.25rem, 1fr));
+  gap: 2rem 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+.stream-col { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.stream-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font: 400 0.9rem/1 var(--body-font);
+  letter-spacing: 0.16em;
+  text-align: center;
+  color: var(--graphite);
+}
+.stream-label .stream-sign { font-size: 1.6em; }
+.stream-dot {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--signature);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--signature) 65%, #000);
+}
+a.stream-dot { transition: transform 0.2s; }
+/* a stream with no posts yet: a hollow dot, "This space blank" */
+.stream-cols .stream-col.is-closed .stream-dot { background: transparent; box-shadow: inset 0 0 0 2px var(--flint); }
+.sc-closed {
+  margin: 0.9rem 0 0;
+  color: var(--smoke);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-align: center;
+}
+a.stream-dot:hover, a.stream-dot:focus-visible { transform: scale(1.2); }
+.stream-col ul { position: relative; width: 100%; margin: 0.6rem 0 0; padding: 1rem 0 0; }
+.stream-col ul::before {   /* the short line down from the dot */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 0.8rem;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--pebble);
+}
+.stream-col li { padding: 0 0 1rem; }
+.sc-date { display: block; margin-bottom: 0.2rem; color: var(--smoke); }
+.stream-col a {
+  font-family: var(--preview-font, var(--body-font));
+  font-weight: var(--preview-weight, 500);
+  text-transform: var(--preview-case, none);
+  letter-spacing: var(--preview-spacing, normal);
+  font-size: 1rem;
+  line-height: 1.25;
+  color: var(--preview-title, var(--slate));
+  text-decoration: none;
+}
+.stream-col.stream-kisso a,
+.stream-col.stream-aleph a { font-size: 0.88rem; }
+.stream-col a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Make It Loud's dot: its yellow, outlined in black */
+.stream-col.stream-zine .stream-dot,
+.stream-section.stream-zine .stream-dot { background: #fff35c; box-shadow: 0 0 0 1.5px #111111; }
+.timeline-list li.stream-zine::before { background: #fff35c; box-shadow: 0 0 0 1px #111111; }
+
+/* one stream at a time (/archives/?stream=N, assets/js/archives.js) */
+.stream-section { margin-top: 3rem; }
+.js .stream-section { display: none; }
+.js .stream-section.is-active { display: block; margin-top: 0.5rem; }
+.stream-filtered main > :not(.ftsgts):not(.stream-section) { display: none; }
+.stream-section > .stream-label { font-size: 1.15rem; margin-bottom: 0.75rem; }
+.stream-dot-big { width: 3rem; height: 3rem; margin: 0 auto 1.5rem; }
+.stream-tags { justify-content: flex-start; padding: 0.5rem 0 1.5rem; }
+.stream-section .back { margin-top: 0.5rem; }
+
+/* ---- About: the logo big, the line under it ---- */
+.about-mark { text-align: center; }
+.about-mark .site-logo {
+  display: inline-block;
+  width: 340px;
+  height: 340px;
+  margin: 0.5rem auto 2rem;
+  padding: 45px 45px 41px 41px;
+}
+.about-mark .site-shark * { stroke-width: 2px; }
+.about-body {
+  margin: 0 auto;
+  text-align: center;
+  font: 400 1.25rem/1.6 var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+@media (max-width: 800px) {
+  .about-mark .site-logo { width: 220px; height: 220px; padding: 29px 29px 27px 27px; }
+  .about-mark .site-shark * { stroke-width: 1.6px; }
+}

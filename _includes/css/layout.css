@@ -1,0 +1,99 @@
+/* ===============================================================
+   LAYOUT — the page's skeleton: .layout > .masthead + .content >
+   main + footer. Posts: one centred text column. The concrete pages:
+   the FRAME (left margin: logo, tagline, FTSGTS; right margin: the
+   menu; the column in between holds the grid or the lists), and the
+   footer kept at the bottom of the screen on short pages.
+   =============================================================== */
+
+/* ---- posts ---- */
+.is-post .content { padding: 7rem clamp(1rem, 4vw, 3rem) 2.5rem; }   /* the top clears the corner logo */
+.is-post main { max-width: var(--measure); margin: 0 auto; }
+
+/* ---- the concrete pages ---- */
+.is-page .layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  container-type: inline-size;   /* the masthead measures the column from here */
+}
+.is-page .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;   /* the content measures the column from here */
+  padding: var(--mast-top) var(--edge-r) 2.5rem var(--side);
+}
+.is-page main {
+  --muted: var(--smoke);
+  flex: 1;
+  width: 100%;
+  margin: 0 auto;
+}
+.is-home main { max-width: var(--col); }
+/* Tags, Archives, About: FTSGTS and the crack hang off main; main reaches at
+   least to FTSGTS's foot, so the footer always lands below it */
+.is-page:not(.is-home) main {
+  position: relative;
+  display: flow-root;
+  min-height: calc(var(--ftsgts-y) + var(--ftsgts-half) + 2rem);
+}
+:root {
+  /* how far the column sits in from the margins on very wide screens */
+  --col-offset: calc((100cqw - min(var(--col), 100cqw)) / 2);
+}
+/* on Tags, Archives and About everything spans the column … */
+.is-page:not(.is-home) main > :not(.ftsgts):not(.crack) {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin-left: var(--col-offset);
+  margin-right: 0;
+}
+@media (min-width: 801px) {
+  /* … except the By-date timeline: a narrower block centred in the column */
+  .is-page:not(.is-home) main > .timeline:not(.ftsgts) {
+    width: min(44rem, 100%);
+    margin-left: calc(var(--col-offset) + (100cqw - 2 * var(--col-offset) - min(44rem, 100%)) / 2);
+  }
+}
+.has-crack .content { overflow-x: clip; }   /* the crack is wider than a narrow screen */
+
+/* ---- the footer: the menu again, small ---- */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  max-width: var(--measure);
+  margin: 4rem auto 0;
+  padding: 1.5rem 0 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.footer-nav { display: flex; gap: 1.1rem; }
+.footer-nav a { color: var(--muted); padding-block: 0.4rem; margin-block: -0.4rem; }   /* taller tap area, same look */
+.footer-nav a:hover { color: var(--fg); }
+.feed-link { display: inline-flex; align-items: center; }   /* the RSS symbol, at the end of the footer links */
+.is-page .site-footer {
+  width: 100%;
+  max-width: none;
+  margin-left: var(--col-offset);
+  margin-right: 0;
+  border-top-color: #00000022;
+}
+.is-page .site-footer,
+.is-page .footer-nav a {
+  color: var(--graphite);
+  font: 400 0.72rem/1.65 var(--body-font);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+@media (max-width: 800px) {
+  .is-post .content { padding: 4.25rem 1rem 1.5rem; }
+  .is-page .content { padding: 1.5rem 1rem; }
+  .is-page:not(.is-home) main > :not(.ftsgts):not(.crack),
+  .is-page .site-footer { width: auto; margin-left: 0; }
+}

@@ -1,0 +1,101 @@
+/* ===============================================================
+   STREAM: zine ("Make It Loud") — loud, bold, hard edges: a yellow
+   page, the title a black strip edge to edge, the text in white boxes
+   with hard black shadows (assets/js/zine.js groups the text into
+   boxes; `boxes:` in a post sets their rows and widths).
+   =============================================================== */
+.style-zine, .stream-zine { --signature: #111111; }
+.stream-zine {
+  --preview-font: Impact, "Arial Black", sans-serif;
+  --preview-title: #111111;
+  --preview-weight: 400;
+  --preview-case: uppercase;
+  --preview-spacing: 0.01em;
+}
+.style-zine {
+  --bg: #fff35c;
+  --fg: #111;
+  --muted: #333;
+  --accent: #ff3d7f;
+  --rule: #111;
+  --card: #fff;
+  --heading-font: Impact, "Arial Black", sans-serif;
+  --code-bg: #fff;
+  --logo-disc: #111111;    /* the logo as a black badge with yellow lines */
+  --logo-rim: #111111;
+  --logo-ink: #fff35c;
+}
+
+/* ---- the post ---- */
+.style-zine.is-post { overflow-x: hidden; }
+.style-zine .post-header h1 {
+  display: block;
+  margin-left: calc(50% - 50vw);    /* a black strip right across the page */
+  margin-right: calc(50% - 50vw);
+  padding: 0.12em calc(50vw - 50%);
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  background: var(--fg);
+  color: var(--bg);
+}
+.style-zine .post-body { font-family: "Chivo", var(--body-font); margin-top: 1.5rem; border: 3px solid var(--fg); background: #fff; padding: 1rem 1.5rem; box-shadow: 8px 8px 0 var(--fg); }
+.style-zine .post-body a { color: var(--fg); text-decoration-color: var(--accent); text-decoration-thickness: 3px; }
+/* the boxes, side by side and wider than the usual column */
+.style-zine .post-body.zine-cols {
+  --spread: min(calc(100vw - 4rem), 72rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.75rem;
+  align-items: stretch;          /* boxes in a row share the tallest one's height */
+  width: var(--spread);
+  margin-left: calc(50% - var(--spread) / 2);
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.style-zine .zine-col {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.4rem;
+  border: 3px solid var(--fg);
+  background: #ffffff;
+  box-shadow: 8px 8px 0 var(--fg);
+}
+.style-zine .zine-col > :first-child { margin-top: 0; }
+.style-zine .zine-col > :last-child { margin-bottom: 0; }
+/* an image that ends a box sits at its foot, so images line up across a row */
+.style-zine .zine-col > p:last-child:has(> img:only-child) { margin-top: auto; padding-top: 1rem; }
+/* with `boxes:`: rows of boxes, each row's widths from the post (--cols) */
+.style-zine .post-body.zine-rows { display: flex; flex-direction: column; gap: 1.75rem; }
+.style-zine .zine-row { display: grid; grid-template-columns: var(--cols); gap: 1.75rem; align-items: stretch; }
+/* quotes: SHOUTED — a black label, yellow capitals, a hard pink shadow */
+.style-zine blockquote {
+  margin: 1.75rem 0;
+  padding: 0.5em 0.8em;
+  border: 0;
+  background: #111111;
+  color: #fff35c;
+  font: 400 1.4em/1.2 var(--heading-font);
+  text-transform: uppercase;
+  box-shadow: 6px 6px 0 var(--accent);
+}
+.style-zine blockquote p { margin: 0; }
+
+/* ---- its home tile ---- */
+.wall-tile.style-zine { justify-content: center; }
+.wall-tile.style-zine .wall-title { margin: 0 -1.5rem; padding: 0.15em 1.5rem; background: #111; color: #fff35c; text-transform: uppercase; font-size: 2em; }
+
+@media (max-width: 700px) {
+  .style-zine .zine-row { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .style-zine .post-header h1 { font-size: 2.4rem; }
+  .wall-tile.style-zine .wall-title { font-size: 1.4em; margin: 0 -1.25rem 0 0; padding: 0.15em 1.25rem 0.15em 0.4em; }
+}
+
+/* pink TEXT is a deeper pink, so it reads on white and on the yellow (5:1);
+   the bright pink stays for borders, shadows and underlines */
+.style-zine .chip { color: #c2185b; }
+.style-zine .toc a.active { color: #c2185b; }

@@ -1,0 +1,56 @@
+{%- comment -%}
+  The shell every page shares: <head> and the body's classes.
+    is-page  Home, Tags, Archives, About (the concrete, the frame)
+    is-home  the home page
+    has-crack / big-logo  About (front matter `crack: true`, `big_logo: true`)
+    is-post style-NAME  a post, in its stream's style
+{%- endcomment -%}
+<!doctype html>
+<html lang="en">
+<head>
+{% include head.html %}
+{%- if page.crack %}
+<link rel="preload" as="image" href="{{ '/assets/img/crack-edge.webp' | relative_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ '/assets/img/slick.webp' | relative_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ '/assets/img/crack-mask.svg' | relative_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ '/assets/img/crack-rim.svg' | relative_url }}">
+{%- endif %}
+</head>
+{%- if page.layout == 'post' %}
+<body class="is-post style-{{ page.style }}">
+{%- else %}
+<body class="is-page{% if page.url == '/' %} is-home{% endif %}{% if page.crack %} has-crack{% endif %}{% if page.big_logo %} big-logo{% endif %}">
+{%- endif %}
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="layout">
+{% include masthead.html %}
+<div class="content">
+<main id="main">
+{{ content }}
+</main>
+{% include footer.html %}
+</div>
+</div>
+{%- if page.crack %}
+<script>
+  // Show the crack only once its images are decoded, so its layers fade in together
+  (function () {
+    var crack = document.querySelector('.crack');
+    if (!crack) return;
+    var files = [
+      '{{ "/assets/img/crack-edge.webp" | relative_url }}',
+      '{{ "/assets/img/slick.webp" | relative_url }}',
+      '{{ "/assets/img/crack-mask.svg" | relative_url }}',
+      '{{ "/assets/img/crack-rim.svg" | relative_url }}'
+    ];
+    var ready = function () { crack.classList.add('is-ready'); };
+    Promise.all(files.map(function (src) {
+      var img = new Image();
+      img.src = src;
+      return img.decode ? img.decode() : Promise.resolve();
+    })).then(ready, ready);
+  })();
+</script>
+{%- endif %}
+</body>
+</html>

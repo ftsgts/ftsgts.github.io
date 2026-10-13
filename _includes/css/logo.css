@@ -1,0 +1,42 @@
+/* ===============================================================
+   THE LOGO — a disc with the line drawing (_includes/logo.html).
+   Sizes and placement: masthead.css (the concrete pages), post.css
+   (posts), lists.css (About's big one).
+   =============================================================== */
+.site-logo {
+  display: block;
+  border-radius: 50%;
+}
+.site-shark { display: block; width: 100%; height: 100%; }
+.site-shark * { vector-effect: non-scaling-stroke; }
+.site-shark .star { fill: currentColor; stroke: none; }
+
+/* On the concrete pages: ETCHED — a disc sunk into the concrete, the lines
+   cut in and whitened like dust (filter #etchdeep: a dark sliver along the
+   top inside of each groove, a pale lip below). The rim is graded like a
+   real recess lit from above: in shadow at the top, catching the light at
+   the bottom (a transparent border shows the rim gradient under the disc). */
+.is-page .site-logo {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--disc), var(--disc)) padding-box,
+              linear-gradient(165deg, var(--rim-dark) 15%, var(--rim-light) 70%) border-box;
+  color: var(--dust);
+  box-shadow: inset 2px 3px 7px #00000052, inset -2px -2px 5px #ffffff8c;
+}
+.is-page .site-shark * { stroke-width: 1.8px; }
+.is-page .site-shark > g { filter: url(#etchdeep); }
+@media (max-width: 800px) {
+  /* the small phone logo: the groove's shadow would shrink below half a
+     pixel, so a deeper, wider one (#etchphone), and slightly heavier lines */
+  .is-page .masthead .site-shark * { stroke-width: 1.6px; }
+  .is-page .masthead .site-shark > g { filter: url(#etchphone); }
+}
+
+/* On posts: a plain disc in the post's stream colours (set in
+   streams/NAME.css with --logo-disc, --logo-rim, --logo-ink), thin lines */
+.is-post .site-logo {
+  border: 1px solid var(--logo-rim, #e6e6e6);
+  background: var(--logo-disc, #ffffff);
+  color: var(--logo-ink, #555555);
+}
+.is-post .site-shark * { stroke-width: var(--logo-line, 1px); }

@@ -1,0 +1,55 @@
+---
+layout: page
+title: Tags
+permalink: /tags/
+---
+{%- comment -%}
+  /tags/ is the tag cloud (each box sized by its number of posts: --w runs
+  from 0, one post, to 1, the busiest tag); /tags/?tag=NAME shows just that
+  tag's posts (assets/js/tags.js). The cloud puts the busiest tags in the
+  middle and the quieter ones towards the edges, like a word cloud.
+{%- endcomment -%}
+{%- assign tags = site.tags | sort %}
+{%- assign max = 1 %}
+{%- for tag in tags %}{% if tag[1].size > max %}{% assign max = tag[1].size %}{% endif %}{% endfor %}
+<div class="tags-index">
+  <h1 class="page-title">Tags</h1>
+  {%- comment %} order by size ("003|name"), then deal them out from both ends
+      inwards, so the biggest meet in the middle {% endcomment %}
+  {%- capture keyed %}{% for tag in tags %}{{ tag[1].size | prepend: "000" | slice: -3, 3 }}|{{ tag[0] }}{% unless forloop.last %}^{% endunless %}{% endfor %}{% endcapture %}
+  {%- assign keyed = keyed | split: "^" | sort %}
+  {%- assign left = "" %}{% assign right = "" %}
+  {%- for k in keyed %}
+    {%- assign parts = k | split: "|" %}
+    {%- assign name = parts[1] %}
+    {%- assign n = parts[0] | plus: 0 %}
+    {%- assign w = 0 %}
+    {%- if max > 1 %}{% assign span = max | minus: 1 %}{% assign w = n | minus: 1 | times: 1.0 | divided_by: span %}{% endif %}
+    {%- capture li %}
+    <li><a href="{{ '/tags/' | relative_url }}?tag={{ name | slugify }}" style="--w: {{ w | round: 2 }}">{{ name }}<span class="n">{{ n }}</span></a></li>
+    {%- endcapture %}
+    {%- assign odd = forloop.index0 | modulo: 2 %}
+    {%- if odd == 0 %}{% assign left = left | append: li %}{% else %}{% assign right = li | append: right %}{% endif %}
+  {%- endfor %}
+  <ul class="tag-cloud">
+    {{- left }}{{ right }}
+  </ul>
+</div>
+
+{%- for tag in tags %}
+{%- assign slug = tag[0] | slugify %}
+<section class="tag-section" id="{{ slug }}" data-tag="{{ slug }}" data-name="{{ tag[0] }}">
+  <h1 class="tag-title">{{ tag[0] }}<span class="count">{{ tag[1].size }}</span></h1>
+  <div class="timeline">
+    <ul class="plain-list timeline-list">
+      {%- for post in tag[1] %}
+      {%- include stream-find.html name=post.style %}
+      <li class="stream-{{ post.style }}"><span class="tl-date"><span class="tl-day">{{ post.date | date: "%d" }}</span> <span class="tl-month">{{ post.date | date: "%b %Y" }}</span></span><a href="{{ post.url | relative_url }}">{{ post.title }}</a><span class="vh">, stream {{ stream_n }}</span></li>
+      {%- endfor %}
+    </ul>
+  </div>
+  <a class="back" href="{{ '/tags/' | relative_url }}">← All tags</a>
+</section>
+{%- endfor %}
+
+<script src="{{ '/assets/js/tags.js' | relative_url }}"></script>

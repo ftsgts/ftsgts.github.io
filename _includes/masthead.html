@@ -1,0 +1,20 @@
+{%- comment -%}
+  The masthead: logo, name, tagline, menu. The same on every page; the CSS
+  places it — a frame round the grid on Home, Tags, Archives and About
+  (css/masthead.css), a small logo and menu in the corner on posts
+  (css/post.css). About shows its logo big in the page instead
+  (`big_logo: true`).
+{%- endcomment -%}
+<header class="masthead">
+  {%- unless page.big_logo %}
+  <a class="site-logo" href="{{ '/' | relative_url }}" tabindex="-1" aria-hidden="true">{% include logo.html %}</a>
+  {%- endunless %}
+  <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  <p class="tagline">{{ site.description }}</p>
+  <nav aria-label="Main">
+    {%- assign menu = "Home:/,Tags:/tags/,Archives:/archives/,Wall:/wall/,About:/about/" | split: "," %}
+    {%- for item in menu %}{% assign m = item | split: ":" %}
+    <a href="{{ m[1] | relative_url }}"{% if page.url == m[1] %} class="active" aria-current="page"{% endif %}>{{ m[0] }}</a>
+    {%- endfor %}
+  </nav>
+</header>
