@@ -8,11 +8,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {%- comment %}
-  The fonts. Source Sans 3: text everywhere. Bricolage Grotesque: FTSGTS, page
-  titles, the menu. IBM Plex Sans + Mono: the spark stream. Nunito Sans:
-  the ruh stream. (The other streams use fonts already on most computers.)
+  The fonts. Source Sans 3: text everywhere. Bricolage Grotesque: BLOGSITE, page
+  titles, the menu. IBM Plex Sans + Mono: the spark stream and the comment wall
+  (/wall/ and /wall/write/), loaded only there. Nunito Sans: the ruh stream,
+  loaded only there. (The other streams' fonts come from the stream list below.)
 {%- endcomment %}
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Nunito+Sans:ital,wght@0,400..700;1,400..600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap">
+{%- if page.style == 'spark' or page.url contains '/wall/' %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+{%- endif %}
+{%- if page.style == 'ruh' %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400..700;1,400..600&display=swap">
+{%- endif %}
 {%- comment %} The streams' signs: each sign's font, downloaded for just those characters (_data/streams.yml) {% endcomment %}
 {%- capture sign_fonts %}{% for s in site.data.streams %}family={{ s.font | replace: ' ', '+' }}{% if s.weight %}:wght@{{ s.weight }}{% endif %}&{% endfor %}{% endcapture %}
 {%- capture signs %}{% for s in site.data.streams %}{{ s.sign }}{% endfor %}{% endcapture %}
