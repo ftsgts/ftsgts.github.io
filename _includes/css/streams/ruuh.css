@@ -1,0 +1,104 @@
+/* ===============================================================
+   STREAM: ruuh ("The Long Way Round") — a warm light aubergine; posts
+   read like letters — a cosy, warm place for thoughtful thoughts: the
+   title set to the right, the text on a soft white sheet, a larger opening line, dotted section breaks, the
+   writer's name as a sign-off. Code: code-colours.css.
+   =============================================================== */
+.style-ruuh, .stream-ruuh { --signature: #a3728f; }
+.stream-ruuh {
+  --preview-font: "Nunito Sans", "Source Sans 3", sans-serif;
+  --preview-title: #432a3a;
+  --preview-weight: 600;
+}
+.style-ruuh {
+  --bg: #fbf6f7;
+  --fg: #382c33;
+  --muted: #74606b;
+  --accent: #7a4766;          /* links: deep mulberry */
+  --rule: #ecdce3;
+  --card: #ffffff;
+  --heading-font: "Nunito Sans", "Source Sans 3", system-ui, sans-serif;
+  --code-bg: #fcf6f4;
+  --warm-title: #432a3a;
+  --warm-shadow: #6b4258;
+  --warm-quote: #d6b4c4;      /* pale mulberry */
+  --warm-quote-text: #634b58;
+  --warm-logo: #a3728f;       /* dusty mulberry-mauve */
+  --logo-ink: var(--warm-logo);
+}
+
+/* ---- the post ---- */
+.style-ruuh .post-header { text-align: right; }
+.style-ruuh .post-header .back { display: block; text-align: left; }
+.style-ruuh .post-header .tags { justify-content: flex-end; }
+.style-ruuh .post-header h1 {
+  font-size: 2.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  color: var(--warm-title);
+}
+.style-ruuh .post-body {
+  margin-top: 1.5rem;
+  padding: 2rem 2.25rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--warm-shadow) 5%, transparent),
+              0 14px 34px color-mix(in srgb, var(--warm-shadow) 7%, transparent);
+  line-height: 1.75;
+  font-family: var(--heading-font);   /* the reading text in its warm, soft sans (Nunito Sans) too */
+}
+.style-ruuh .post-body h2,
+.style-ruuh .post-body h3 { font-weight: 600; color: var(--warm-title); }
+.style-ruuh .post-body > p:first-child {
+  font: 500 1.22em/1.55 var(--heading-font);
+  color: var(--warm-title);
+}
+.style-ruuh .post-body hr { border: 0; margin: 2rem 0; text-align: center; }
+.style-ruuh .post-body hr::before { content: "· · ·"; letter-spacing: 0.6em; color: var(--warm-logo); }
+/* displays author's name at bottom of post */
+/* .style-ruuh .post-body[data-author]::after {
+  content: "— " attr(data-author);
+  display: block;
+  margin-top: 1.75rem;
+  text-align: right;
+  font: italic 500 1.15em var(--heading-font);
+  color: var(--warm-title);
+}*/
+.style-ruuh pre { border: 1px solid var(--rule); }
+/* quotes: OPEN AND CLOSED SOFTLY — the words centred in warm italics,
+   between two short pale rules centred on them, each with a soft curly
+   quote mark in its middle ( —— “ ——  …  —— ” —— ) */
+.style-ruuh blockquote {
+  margin: 2.25rem auto;
+  padding: 0 1rem;
+  border: 0;
+  text-align: center;
+  color: var(--warm-title);
+  font: italic 500 1.15em/1.65 var(--heading-font);
+}
+.style-ruuh blockquote::before,
+.style-ruuh blockquote::after {
+  display: block;
+  width: 7rem;
+  margin: 0 auto;
+  font: 400 1.9em/1 Georgia, "Times New Roman", serif;
+  color: #c49bb0;
+  /* a short rule each side of the mark */
+  background:
+    linear-gradient(var(--warm-quote), var(--warm-quote)) left center / 2.4rem 1.5px no-repeat,
+    linear-gradient(var(--warm-quote), var(--warm-quote)) right center / 2.4rem 1.5px no-repeat;
+}
+.style-ruuh blockquote::before { content: "\201C"; height: 0.75em; margin-bottom: 0.55rem; line-height: 1.05; }
+.style-ruuh blockquote::after { content: "\201D"; height: 0.75em; margin-top: 0.6rem; line-height: 1.05; }
+.style-ruuh blockquote p { margin: 0; }
+
+/* ---- its home tile ---- */
+.wall-tile.style-ruuh { text-align: right; }
+.wall-tile.style-ruuh .wall-title { color: #432a3a; font-weight: 600; }
+
+@media (max-width: 600px) {
+  .style-ruuh .post-header h1 { font-size: 2.2rem; }
+  .style-ruuh .post-body { padding: 1.4rem; }
+}

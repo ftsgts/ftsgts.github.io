@@ -1,0 +1,61 @@
+/* ===============================================================
+   STREAM: aleph ("Less") — the purest page: plain white, neutral
+   greys, widely spaced light letters, everything centred and still.
+   =============================================================== */
+.style-aleph, .stream-aleph { --signature: #9a9a9a; }
+/* in lists (Archives, Tags): the title in the stream's face */
+.stream-aleph {
+  --preview-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --preview-title: #555555;
+  --preview-weight: 300;
+  --preview-spacing: 0.14em;
+}
+.style-aleph {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #707070;
+  --accent: #11493a;
+  --rule: #ececec;
+  --card: #ffffff;
+  --heading-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --code-bg: #f6f6f6;
+  --logo-ink: #9a9a9a;   /* the logo, all light grey: it's all less */
+}
+
+/* ---- the post ---- */
+.style-aleph .post-header { padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule); text-align: center; }
+.style-aleph .post-header h1 {
+  margin-right: -0.16em;          /* cancels the last letter's spacing, so the title sits truly centred */
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  line-height: 1.15;
+  color: #555555;
+}
+.style-aleph .post-header .meta { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; }
+.style-aleph .post-header .back { display: block; text-align: left; }
+.style-aleph .post-header .tags { justify-content: center; }
+.style-aleph .chip { border-radius: 0; border-color: var(--rule); color: var(--muted); }
+.style-aleph .post-body {
+  max-width: 46rem;
+  /*margin-top: 2rem;*/
+  margin: 2rem auto 0 auto; /* Centered: 2rem top, auto right, 0 bottom, auto left */
+  /* expansive: broad, light letters with air round them — room to think */
+  font-family: "Work Sans", var(--body-font);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.85;
+}
+.style-aleph .post-body strong { font-weight: 500; }
+.style-aleph .post-body a { text-underline-offset: 3px; }
+/* quotes: a single light hairline */
+.style-aleph blockquote { border-left: 1px solid #c4c4c4; color: var(--fg); }
+
+/* ---- its home tile ---- */
+.wall-tile.style-aleph { justify-content: center; text-align: center; }
+.wall-tile.style-aleph .wall-title { font-weight: 300; letter-spacing: 0.16em; color: #555555; font-size: 2.2em; }
+
+@media (max-width: 600px) {
+  .style-aleph .post-header h1 { font-size: 2.2rem; }
+  .wall-tile.style-aleph .wall-title { font-size: 1.5em; letter-spacing: 0.12em; }
+}

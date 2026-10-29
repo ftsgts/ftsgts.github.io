@@ -1,0 +1,132 @@
+/* ===============================================================
+   POSTS — what every post shares: the corner masthead (small logo top
+   left, menu top right), the header (title, number/date/author, tags),
+   the contents list, the back link. Each stream's own look:
+   streams/NAME.css.
+   =============================================================== */
+.is-post { border-top: 4px solid var(--signature); }
+
+/* ---- the corner masthead ---- */
+.is-post .masthead {
+  position: absolute;
+  top: 1.1rem;
+  left: 1.25rem;
+  right: 1.75rem;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  color: inherit;             /* the post's own text colour, dark or light */
+}
+.is-post .site-title,
+.is-post .tagline { display: none; }
+.is-post .site-logo { width: 78px; height: 78px; padding: 11px 11px 9px 9px; }
+.is-post .masthead nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.4rem;
+}
+.is-post .masthead nav a {
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+  padding-block: 0.3rem;   /* taller tap area, same look */
+  margin-block: -0.3rem;
+}
+.is-post .masthead nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 800px) {
+  .is-post .masthead { top: 0.75rem; left: 0.75rem; right: 1rem; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+  .is-post .masthead nav { gap: 0.9rem; overflow-x: auto; }
+  .is-post .site-logo { width: 52px; height: 52px; padding: 7px 7px 6px 6px; }
+}
+
+/* ---- the header ---- */
+.post-header > .back { display: block; width: fit-content; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0 0; }
+.chip {
+  display: inline-block;
+  padding: 0.1rem 0.65rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--accent);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.chip:hover { border-color: var(--accent); }
+
+/* ---- "← Home" ---- */
+.back {
+  display: inline-block;
+  margin: 0 0 1.5rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--muted);
+}
+.back:hover { color: var(--accent); }
+.post + .back { margin: 3rem 0 0; }
+
+/* ---- the contents list (posts with `toc: true`; assets/js/toc.js) ----
+   Narrow screens: a box under the title. Wide screens: a panel on the right. */
+.toc {
+  margin: 1.5rem 0;
+  padding: 0.6rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+}
+.toc summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.toc ul { list-style: none; margin: 0.6rem 0 0.2rem; padding: 0; }
+.toc li { margin: 0.15rem 0; }
+.toc a {
+  display: block;
+  padding: 0.15rem 0 0.15rem 0.75rem;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  text-decoration: none;
+  line-height: 1.35;
+}
+.toc .toc-h3 a { padding-left: 1.6rem; font-size: 0.95em; }
+.toc a:hover { color: var(--fg); }
+.toc a.active { color: var(--accent); border-left-color: var(--accent); }
+.post-body h2[id], .post-body h3[id] { scroll-margin-top: 1.5rem; }
+@media (min-width: 1200px) {
+  .is-post main:has(.has-toc) { max-width: calc(var(--measure) + 16rem); }
+  .post.has-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 13rem;
+    column-gap: 3rem;
+    align-items: start;
+  }
+  .post.has-toc > .post-header { grid-column: 1 / -1; }
+  .post.has-toc > .post-body { grid-column: 1; grid-row: 2; }
+  .post.has-toc > .toc {
+    grid-column: 2;
+    grid-row: 2;
+    position: sticky;
+    top: 2rem;
+    margin: 1.5rem 0 0;   /* level with the top of the post's text */
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    background: transparent;
+    border: 0;
+    border-left: 1px solid var(--rule);
+    border-radius: 0;
+    padding: 0 0 0 1rem;
+  }
+  .post.has-toc > .toc summary { pointer-events: none; list-style: none; }
+  .post.has-toc > .toc summary::-webkit-details-marker { display: none; }
+}
+
+/* ---- images: one on its own line (a paragraph of its own, i.e. blank
+   lines above and below it in the post) sits centred under the text ---- */
+.post-body p > img:only-child { display: block; margin-inline: auto; }

@@ -1,0 +1,11 @@
+<footer class="site-footer">
+  <span>© {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</span>
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="{{ '/' | relative_url }}">Home</a>
+    <a href="{{ '/tags/' | relative_url }}">Tags</a>
+    <a href="{{ '/archives/' | relative_url }}">Archives</a>
+    <a href="{{ '/wall/' | relative_url }}">Wall</a>
+    <a href="{{ '/about/' | relative_url }}">About</a>
+    <a class="feed-link" href="{{ '/feed.xml' | relative_url }}" title="RSS feed"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><circle cx="3" cy="13" r="2" fill="currentColor"/><path d="M1.5 7.5a7 7 0 0 1 7 7M1.5 2.5a12 12 0 0 1 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="vh">RSS feed</span></a>
+  </nav>
+</footer>

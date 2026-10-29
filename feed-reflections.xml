@@ -1,0 +1,41 @@
+---
+layout: null
+permalink: /feed-reflections.xml
+---
+{%- comment -%}
+  The filtered Tech feed (Atom): the latest 10 posts tagged with 'reflections'.
+  Full web addresses come from `url` in _config.yml.
+{%- endcomment -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://w3.org">
+  <title>{{ site.title | xml_escape }} - Tech</title>
+  <subtitle>{{ site.description | xml_escape }}</subtitle>
+  <link href="{{ '/feed-reflections.xml' | absolute_url }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html"/>
+  <id>{{ '/feed-reflections.xml' | absolute_url | xml_escape }}</id>
+  <updated>{{ site.tags.reflections.first.date | default: site.time | date_to_xmlschema }}</updated>
+  <author><name>{{ site.title | xml_escape }}</name></author>
+  <rights>© {{ site.time | date: "%Y" }} {{ site.title | xml_escape }}. Share with credit and a link, unchanged, non-commercial. Not for AI training.</rights>
+  {%- for post in site.tags.reflections limit: 10 %}
+  {%- include stream-find.html name=post.style %}
+  {%- assign writer = site.data.authors[post.author] %}
+  <entry xml:base="{{ post.url | absolute_url }}">
+    <title>{{ post.title | xml_escape }}</title>
+    <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html"/>
+    <id>{{ post.url | absolute_url | xml_escape }}</id>
+    <published>{{ post.date | date_to_xmlschema }}</published>
+    <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
+    {%- if writer %}
+    <author><name>{{ writer.name | xml_escape }}</name></author>
+    {%- endif %}
+    {%- if stream %}
+    <category term="stream-{{ stream_n }}" label="Stream {{ stream_n }}"/>
+    {%- endif %}
+    {%- for tag in post.tags %}
+    <category term="{{ tag | xml_escape }}"/>
+    {%- endfor %}
+    <summary type="html">{{ post.excerpt | xml_escape }}... [Get the full post at: https://ftsgts.github.io/]</summary> 
+  </entry>
+  {%- endfor %}
+</feed>
+

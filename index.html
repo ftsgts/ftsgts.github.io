@@ -1,0 +1,38 @@
+---
+layout: page
+---
+{%- comment -%}
+  Home: the index line, then the grid — one tile per stream, in the order of
+  _data/streams.yml (stream 1 top left), each showing that stream's latest
+  post, titled in the stream's own style, with its number (sign/post) in
+  the corner. A stream with no posts yet keeps its place: a tile of bare
+  concrete with the etched logo, the same on every blank tile, and "This
+  space blank" (so every stream stays where its number says).
+  FTSGTS runs up the left of the grid.
+{%- endcomment -%}
+{%- assign live = 0 %}
+{%- for s in site.data.streams %}{% assign latest = site.posts | where: "style", s.name | first %}{% if latest %}{% assign live = live | plus: 1 %}{% endif %}{% endfor %}
+<h1 class="vh">{{ site.title }} — index</h1>
+<div class="wall-frame">
+  <div class="ftsgts" aria-hidden="true">{{ site.title }}</div>
+  <div class="index-line" aria-hidden="true">
+    <span>{{ site.title }} / INDEX</span><span>N° {{ live | prepend: "0" | slice: -2, 2 }}</span><span>STREAMS</span><span>OPEN</span>
+  </div>
+  <div class="wall">
+    {%- for s in site.data.streams %}
+    {%- assign post = site.posts | where: "style", s.name | first %}
+    {%- if post == nil %}
+    <div class="wall-tile is-closed">
+      <span class="wall-no">{% include stream-sign.html name=s.name %}</span>
+      <span class="site-logo" aria-hidden="true">{% include logo.html bare=true %}</span>
+      <span class="wall-closed">This space blank</span>
+    </div>
+    {%- continue %}
+    {%- endif %}
+    <a class="wall-tile style-{{ s.name }} stream-{{ s.name }}" href="{{ post.url | relative_url }}">
+      <span class="wall-no">{% include post-number.html post=post %}</span>
+      <span class="wall-title">{{ post.title }}</span>
+    </a>
+    {%- endfor %}
+  </div>
+</div>

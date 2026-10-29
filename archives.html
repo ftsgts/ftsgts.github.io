@@ -1,0 +1,89 @@
+---
+layout: page
+title: Archives
+permalink: /archives/
+---
+{%- comment -%}
+  "By stream": one column per stream, in the order of _data/streams.yml —
+  its sign, a dot in its colour (linking to just that stream), its posts;
+  a stream with no posts yet shows a hollow dot and "This space blank".
+  Then "By date". /archives/?stream=N shows only stream N
+  (assets/js/archives.js); those sections sit at the end of the page.
+{%- endcomment -%}
+<h1 class="page-title">Archives</h1>
+
+<p class="archive-jump meta">
+  <a href="#by-stream">By stream</a> · <a href="#by-date">By date</a>
+</p>
+
+<h2 class="archive-heading" id="by-stream">By stream</h2>
+<div class="stream-cols">
+  {%- for s in site.data.streams %}
+  {%- assign posts = site.posts | where: "style", s.name %}
+  {%- if posts.size == 0 %}
+  <section class="stream-col stream-{{ s.name }} is-closed">
+    <span class="stream-label">{% include stream-sign.html name=s.name %}</span>
+    <span class="stream-dot" aria-hidden="true"></span>
+    <p class="sc-closed">This space blank</p>
+  </section>
+  {%- continue %}
+  {%- endif %}
+  <section class="stream-col stream-{{ s.name }}">
+    <span class="stream-label">{% include stream-sign.html name=s.name %}</span>
+    <a class="stream-dot" href="{{ '/archives/' | relative_url }}?stream={{ forloop.index }}"><span class="vh">Stream {{ forloop.index }}: show only its posts</span></a>
+    <ul class="plain-list">
+      {%- for post in posts %}
+      <li>
+        <span class="sc-date">{{ post.date | date: "%d %b %Y" }}</span>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endfor %}
+</div>
+
+<h2 class="archive-heading" id="by-date">By date</h2>
+{%- assign years = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+{%- for year in years %}
+<section class="year timeline">
+  <h3>{{ year.name }}</h3>
+  <ul class="plain-list timeline-list">
+    {%- for post in year.items %}
+    {%- include stream-find.html name=post.style %}
+    <li class="stream-{{ post.style }}"><span class="tl-date"><span class="tl-day">{{ post.date | date: "%d" }}</span> <span class="tl-month">{{ post.date | date: "%b" }}</span></span><a href="{{ post.url | relative_url }}">{{ post.title }}</a><span class="vh">, stream {{ stream_n }}</span></li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}
+
+{%- for s in site.data.streams %}
+{%- assign posts = site.posts | where: "style", s.name %}
+{%- if posts.size == 0 %}{% continue %}{% endif %}
+<section class="stream-section stream-{{ s.name }}" data-stream="{{ forloop.index }}">
+  <span class="stream-label">{% include stream-sign.html name=s.name %}</span>
+  <span class="stream-dot stream-dot-big" aria-hidden="true"></span>
+  <h2 class="archive-heading">By date</h2>
+  <div class="timeline">
+    <ul class="plain-list timeline-list">
+      {%- for post in posts %}
+      <li class="stream-{{ s.name }}"><span class="tl-date"><span class="tl-day">{{ post.date | date: "%d" }}</span> <span class="tl-month">{{ post.date | date: "%b %Y" }}</span></span><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+  {%- assign tagnames = ',' %}
+  {%- for post in posts %}{% for t in post.tags %}{% assign tk = ',' | append: t | append: ',' %}{% unless tagnames contains tk %}{% assign tagnames = tagnames | append: t | append: ',' %}{% endunless %}{% endfor %}{% endfor %}
+  {%- assign tagnames = tagnames | split: ',' | sort %}
+  {%- if tagnames.size > 0 %}
+  <h2 class="archive-heading">Tags</h2>
+  <ul class="tag-cloud stream-tags">
+    {%- for t in tagnames %}{% if t != '' %}
+    <li><a href="{{ '/tags/' | relative_url }}?tag={{ t | slugify }}" style="--w: 0">{{ t }}</a></li>
+    {%- endif %}{% endfor %}
+  </ul>
+  {%- endif %}
+  <a class="back" href="{{ '/archives/' | relative_url }}">← All streams</a>
+</section>
+{%- endfor %}
+
+<script src="{{ '/assets/js/archives.js' | relative_url }}"></script>

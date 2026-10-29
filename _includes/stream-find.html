@@ -1,0 +1,10 @@
+{%- comment -%}
+  Looks a stream up in _data/streams.yml by name and sets, for the page
+  that includes it:
+    stream    its entry (name, sign, lang, font)
+    stream_n  its number (its place in the list, from 1)
+  Use: {% include stream-find.html name=post.style %}
+{%- endcomment -%}
+{%- assign stream = nil -%}
+{%- assign stream_n = 0 -%}
+{%- for s in site.data.streams %}{% if s.name == include.name %}{% assign stream = s %}{% assign stream_n = forloop.index %}{% endif %}{% endfor -%}

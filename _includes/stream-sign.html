@@ -1,0 +1,7 @@
+{%- comment -%}
+  A stream's sign: its number in its own script (_data/streams.yml), hidden
+  from screen readers, which hear "stream N" instead.
+  Use: {% include stream-sign.html name=post.style %}
+{%- endcomment -%}
+{%- include stream-find.html name=include.name -%}
+{%- if stream %}<span class="stream-sign" lang="{{ stream.lang }}" aria-hidden="true">{{ stream.sign }}</span><span class="vh">stream {{ stream_n }}</span>{% endif -%}

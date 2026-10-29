@@ -1,0 +1,48 @@
+/* ===============================================================
+   THE CRACK — About only (`crack: true`): the concrete splits behind
+   FTSGTS to show a dark oil slick. One element, sized in FTSGTS's own
+   em and placed from FTSGTS's middle, so it's the same crack in the same
+   place on every screen; FTSGTS sits half on the slick, half on the
+   concrete. The box is the 1280×900 reference it was drawn for
+   (13.333em × 9.375em at 6rem).
+     background  the broken face (crack-edge.webp) over the slick (slick.webp)
+     mask        the opening (crack-mask.svg)
+     ::before    the concrete's faint lip round it (crack-rim.svg)
+   The shapes come from _tools/crack.py. Hidden on upright phones.
+   =============================================================== */
+.crack { display: none; }
+.has-crack main > .crack,
+.has-crack main:has(> .crack)::before {
+  display: block;
+  position: absolute;
+  font-size: var(--ftsgts-size);
+  width: 13.333em;
+  height: 9.375em;
+  left: calc(var(--col-offset) - (var(--gap) + 2.044em + 0.65em));
+  top: calc(var(--ftsgts-y) - 6.323em);
+  pointer-events: none;
+}
+/* Hidden until base.html's script has decoded the images, then faded in together */
+.has-crack main > .crack {
+  /*opacity: 0;
+  transition: opacity .35s ease;*/
+}
+.has-crack main > .crack.is-ready { opacity: 1; }
+.has-crack main > .crack {
+  background:
+    url("{{ '/assets/img/crack-edge.webp' | relative_url }}") 0 0 / 100% 100% no-repeat,
+    #14121c url("{{ '/assets/img/slick.webp' | relative_url }}") center / cover no-repeat;
+  -webkit-mask: url("{{ '/assets/img/crack-mask.svg' | relative_url }}") 0 0 / 100% 100% no-repeat;
+  mask: url("{{ '/assets/img/crack-mask.svg' | relative_url }}") 0 0 / 100% 100% no-repeat;
+}
+.has-crack main:has(> .crack)::before {
+  content: "";
+  /*opacity: 0;
+  transition: opacity .35s ease;*/
+  background: url("{{ '/assets/img/crack-rim.svg' | relative_url }}") 0 0 / 100% 100% no-repeat;
+}
+.has-crack main:has(> .crack.is-ready)::before { opacity: 1; }
+@media (max-width: 800px) {
+  .has-crack main > .crack,
+  .has-crack main:has(> .crack)::before { display: none; }
+}

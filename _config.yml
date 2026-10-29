@@ -1,0 +1,35 @@
+title: "FTSGTS"
+description: "We are ontologically shocked"
+
+# For https://USERNAME.github.io (repo named USERNAME.github.io): leave baseurl empty.
+# For https://USERNAME.github.io/REPO: set baseurl to "/REPO".
+url: "https://ftsgts.github.io"
+baseurl: ""
+
+# The comment wall's Worker address (_tools/comment-wall/README.md), e.g.
+# "https://wall.NAME.workers.dev". Empty: /wall/ says it isn't open yet.
+wall_api: "https://wall.ftsgts-collective.workers.dev"
+
+permalink: /:year/:month/:day/:title/
+markdown: kramdown
+
+# Every post uses the "post" layout unless it says otherwise.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Not published (folders starting with _ are skipped anyway: _notes, _tools, _archive)
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - vendor

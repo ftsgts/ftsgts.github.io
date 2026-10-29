@@ -1,0 +1,36 @@
+---
+layout: page
+title: Wall
+permalink: /wall/
+---
+{%- comment -%}
+  /wall/ is the wall: a free-form log book on the concrete. Anyone can
+  write (on /wall/write/, wall-write.html), sign it with a name or not;
+  each piece stays 3 days. No accounts, no profiles: only the words and
+  the signature are kept. The writing lives with a small Cloudflare
+  Worker (its code and setup: _tools/comment-wall/); `wall_api` in
+  _config.yml is its address. While that's empty the page says the wall
+  isn't open yet. Script: assets/js/comment-wall.js. Styles:
+  css/comment-wall.css.
+{%- endcomment -%}
+{%- assign wall_on = false %}{% if site.wall_api and site.wall_api != "" %}{% assign wall_on = true %}{% endif %}
+{%- if wall_on %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400&family=Chivo:wght@400&family=Jost:wght@400&family=Manrope:wght@500&family=IBM+Plex+Mono:wght@400&display=swap">
+{%- endif %}
+<h1 class="page-title">Wall</h1>
+
+<div class="comment-wall" id="comment-wall" data-api="{{ site.wall_api }}">
+  <p class="cw-intro">Say hello, all welcome.<br>Everything stays on the wall for 3 days.</p>
+  {%- if wall_on %}
+  <p class="cw-write-link"><a href="{{ '/wall/write/' | relative_url }}">Write</a></p>
+  <p class="cw-status" role="status"></p>
+  {%- else %}
+  <p class="cw-status">The wall isn’t open yet.</p>
+  {%- endif %}
+</div>
+
+{%- if wall_on %}
+<ol class="cw-wall" aria-label="The wall, newest first"></ol>
+<noscript><p class="cw-status">The wall needs JavaScript.</p></noscript>
+<script src="{{ '/assets/js/comment-wall.js' | relative_url }}"></script>
+{%- endif %}

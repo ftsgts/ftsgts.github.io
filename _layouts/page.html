@@ -1,0 +1,11 @@
+---
+layout: base
+---
+{%- comment -%}
+  Home, Tags, Archives and About: the concrete page with the frame. Tags,
+  Archives and About carry FTSGTS up the left of their content (the home
+  page has it beside the grid instead); About can carry the crack.
+{%- endcomment -%}
+{%- if page.crack %}<div class="crack" aria-hidden="true"></div>{% endif %}
+{%- unless page.url == '/' %}<div class="ftsgts" aria-hidden="true">{{ site.title }}</div>{% endunless %}
+{{ content }}
